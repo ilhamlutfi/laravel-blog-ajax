@@ -3,8 +3,9 @@
 namespace App\Http\Services\Backend;
 
 use App\Models\Category;
-use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryService
 {
@@ -51,5 +52,22 @@ class CategoryService
             ])
             ->make();
         }
+    }
+
+    public function getFirstBy(string $column, string $value)
+    {
+        return Category::where($column, $value)->firstOrFail();
+    }
+
+    public function create(array $data)
+    {
+        $data['slug'] = Str::slug($data['name']);
+        return Category::create($data);
+    }
+
+    public function update(array $data, string $uuid)
+    {
+        $data['slug'] = Str::slug($data['name']);
+        return Category::where('uuid', $uuid)->update($data);
     }
 }
