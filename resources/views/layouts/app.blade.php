@@ -8,6 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- verif adsense --}}
+    <meta name="google-adsense-account" content="ca-pub-3010068237307801">
+
     <title>@yield('title') - Admin Blog</title>
 
     <!-- Fonts -->
@@ -41,19 +44,23 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item btn btn-sm btn-light">
-                                <a class="nav-link" href="{{ route('login') }}">Dashboard</a>
+                                <a class="nav-link" href="{{ route('login') }}"><i class="fa fa-chart-bar"></i> Dashboard</a>
                             </li>
 
-                            <li class="nav-item btn btn-sm btn-light">
-                                <a class="nav-link" href="{{ route('login') }}">Article</a>
+                            <li class="nav-item btn btn-sm btn-light {{ request()->is('admin/articles*') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.articles.index') }}"><i class="fa fa-file-alt"></i> Article</a>
                             </li>
 
                             <li class="nav-item btn btn-sm btn-light {{ request()->is('admin/categories*') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a>
+                                <a class="nav-link" href="{{ route('admin.categories.index') }}"><i class="fa fa-list"></i> Categories</a>
+                            </li>
+
+                            <li class="nav-item btn btn-sm btn-light {{ request()->is('admin/tags*') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.tags.index') }}"><i class="fa fa-tag"></i> Tag</a>
                             </li>
 
                             <li class="nav-item btn btn-sm btn-light">
-                                <a class="nav-link" href="{{ route('login') }}">Tag</a>
+                                <a class="nav-link" href="{{ url('/') }}" target="_blank"><i class="fa fa-arrow-alt-circle-up"></i> Homepage</a>
                             </li>
                         @endauth
                     </ul>

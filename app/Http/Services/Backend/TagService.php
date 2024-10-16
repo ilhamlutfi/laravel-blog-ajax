@@ -2,35 +2,35 @@
 
 namespace App\Http\Services\Backend;
 
-use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryService
+class TagService
 {
     public function dataTable($request)
     {
-        // $data = Category::latest()->get(['uuid', 'name', 'slug']); // cara 1
+        // $data = Tag::latest()->get(['uuid', 'name', 'slug']); // cara 1
         // $data = DB::table('categories')->latest()->get(['uuid', 'name', 'slug']); // cara 2
 
         if ($request->ajax()) {
-            $totalData = Category::count();
+            $totalData = Tag::count();
             $totalFiltered = $totalData;
 
             $limit = $request->length;
             $start = $request->start;
 
             if (empty($request->search['value'])) {
-                $data = Category::orderBy('id', 'DESC')
-                ->offset($start)
-                ->limit($limit)
-                ->get(['id', 'uuid', 'name', 'slug']);
+                $data = Tag::orderBy('id', 'DESC')
+                    ->offset($start)
+                    ->limit($limit)
+                    ->get(['id', 'uuid', 'name', 'slug']);
             } else {
-                $data = Category::filter($request->search['value'])
-                ->orderBy('id', 'DESC')
-                ->offset($start)
-                ->limit($limit)
-                ->get(['id', 'uuid', 'name', 'slug']);
+                $data = Tag::filter($request->search['value'])
+                    ->orderBy('id', 'DESC')
+                    ->offset($start)
+                    ->limit($limit)
+                    ->get(['id', 'uuid', 'name', 'slug']);
 
                 $totalFiltered = $data->count();
             }
@@ -65,18 +65,18 @@ class CategoryService
 
     public function getFirstBy(string $column, string $value)
     {
-        return Category::where($column, $value)->firstOrFail();
+        return Tag::where($column, $value)->firstOrFail();
     }
 
     public function create(array $data)
     {
         $data['slug'] = Str::slug($data['name']);
-        return Category::create($data);
+        return Tag::create($data);
     }
 
     public function update(array $data, string $uuid)
     {
         $data['slug'] = Str::slug($data['name']);
-        return Category::where('uuid', $uuid)->update($data);
+        return Tag::where('uuid', $uuid)->update($data);
     }
 }

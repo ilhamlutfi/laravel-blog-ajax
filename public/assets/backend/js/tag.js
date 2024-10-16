@@ -1,17 +1,17 @@
 let submit_method;
 
 $(document).ready(function () {
-    categoryTable();
+    tagTable();
 });
 
 // datatable serverside
-function categoryTable() {
+function tagTable() {
     $('#yajra').DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
         // pageLength: 20, // set default records per page
-        ajax: "/admin/categories/serverside",
+        ajax: "/admin/tags/serverside",
         columns: [{
                 data: 'DT_RowIndex',
                 name: 'DT_RowIndex'
@@ -35,13 +35,12 @@ function categoryTable() {
 };
 
 // form create
-const modalCategory = () => {
+const modalTag = () => {
     submit_method = 'create';
-    
-    resetForm('#formCategory');
+    resetForm('#formTag');
     resetValidation();
-    $('#modalCategory').modal('show');
-    $('.modal-title').html('<i class="fa fa-plus"></i> Create Category');
+    $('#modalTag').modal('show');
+    $('.modal-title').html('<i class="fa fa-plus"></i> Create Tag');
     $('.btnSubmit').html('<i class="fa fa-save"></i> Save');
 }
 
@@ -50,19 +49,19 @@ const editData = (e) => {
     let id = e.getAttribute('data-id');
 
     startLoading();
-    resetForm('#formCategory');
+    resetForm('#formTag');
     resetValidation();
 
     $.ajax({
         type: "GET",
-        url: "/admin/categories/" + id,
+        url: "/admin/tags/" + id,
         success: function (response) {
             let parsedData = response.data;
 
             $('#id').val(parsedData.uuid);
             $('#name').val(parsedData.name);
-            $('#modalCategory').modal('show');
-            $('.modal-title').html('<i class="fa fa-edit"></i> Edit Category');
+            $('#modalTag').modal('show');
+            $('.modal-title').html('<i class="fa fa-edit"></i> Edit Tag');
             $('.btnSubmit').html('<i class="fa fa-save"></i> Save');
 
             submit_method = 'edit';
@@ -81,7 +80,7 @@ const deleteData = (e) => {
 
     Swal.fire({
         title: "Are you sure?",
-        text: "Do you want to delete this category?",
+        text: "Do you want to delete this tag?",
         icon: "question",
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
@@ -99,7 +98,7 @@ const deleteData = (e) => {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "DELETE",
-                url: "/admin/categories/" + id,
+                url: "/admin/tags/" + id,
                 dataType: "json",
                 success: function (response) {
                     reloadTable();
@@ -115,19 +114,19 @@ const deleteData = (e) => {
 }
 
 // save data
-$('#formCategory').on('submit', function (e) {
+$('#formTag').on('submit', function (e) {
     e.preventDefault();
 
     startLoading();
 
     let url, method;
-    url = '/admin/categories';
+    url = '/admin/tags';
     method = 'POST';
 
     const inputForm = new FormData(this);
 
     if (submit_method == 'edit') {
-        url = '/admin/categories/' + $('#id').val();
+        url = '/admin/tags/' + $('#id').val();
         inputForm.append('_method', 'PUT');
     }
 
@@ -141,7 +140,7 @@ $('#formCategory').on('submit', function (e) {
         contentType: false,
         processData: false,
         success: function (response) {
-            $('#modalCategory').modal('hide');
+            $('#modalTag').modal('hide');
             reloadTable();
             resetValidation();
             stopLoading();

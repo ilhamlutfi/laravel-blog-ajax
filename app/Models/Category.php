@@ -21,4 +21,12 @@ class Category extends Model
             $model->uuid = Str::uuid();
         });
     }
+
+    public static function filter($search)
+    {
+        return Category::where('name', 'like', "%{$search}%")
+        ->orWhere('slug', 'like', "%{$search}%");
+    }
+
+    
 }
