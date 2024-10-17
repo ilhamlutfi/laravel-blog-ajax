@@ -2,7 +2,10 @@
 
 namespace App\Http\Services\Backend;
 
+use App\Models\Tag;
 use App\Models\Article;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class ArticleService
@@ -89,5 +92,26 @@ class ArticleService
                 ])
                 ->make();
         }
+    }
+
+    public function getCategory()
+    {
+        return Category::latest()->get(['id', 'name']);
+    }
+
+    public function getTag()
+    {
+        return Tag::latest()->get(['id', 'name']);
+    }
+
+    public function create(array $data)
+    {
+        $data['slug'] = Str::slug($data['title']);
+
+        // insert article_tag
+        $article = Article::create($data);
+        $article->tags()->sync($data['tag_id']);
+
+        return $article;
     }
 }
