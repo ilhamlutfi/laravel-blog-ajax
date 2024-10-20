@@ -3,6 +3,7 @@
 namespace App\Http\Services\Backend;
 
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 
 class ImageService
@@ -31,5 +32,10 @@ class ImageService
         }
 
         return $image_name;
+    }
+
+    public function deleteImage(string $image, string $path)
+    {
+        return Storage::disk('public')->delete($path .'/'. $image);
     }
 }

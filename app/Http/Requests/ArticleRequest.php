@@ -21,16 +21,18 @@ class ArticleRequest extends FormRequest
      */
     public function rules(): array
     {
+        $routeId = $this->route('article');
+
         return [
-            'title' => "required|min:3",
+            'title' => 'required|string|min:3|max:255|unique:articles,title,' . $routeId . ',uuid',
             "slug" => "nullable",
             "content" => "required",
-            "published" => 'required|in:0,1',
+            "published" => "required|in:0,1",
             "category_id" => "required|exists:categories,id",
-            "tag_id" => 'required|array',
-            "tag_id.*" => 'required|exists:tags,id',
-            "keywords" => 'required|min:3',
-            "image" => 'required|file|image|max:2048|mimes:png,jpg,jpeg,webp|mimetypes:image/png,image/jpg,image/jpeg,image/webp',
+            "tag_id" => "required|array",
+            "tag_id.*" => "required|exists:tags,id",
+            "keywords" => "required|min:3",
+            "image" => $this->isMethod('POST') ? "required|file|image|max:2048|mimes:png,jpg,jpeg,webp|mimetypes:image/png,image/jpg,image/jpeg,image/webp" : "nullable|file|image|max:2048|mimes:png,jpg,jpeg,webp|mimetypes:image/png,image/jpg,image/jpeg,image/webp",
         ];
     }
 }

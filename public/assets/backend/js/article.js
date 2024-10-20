@@ -61,19 +61,19 @@ const deleteData = (e) => {
         showCancelButton: true,
         showCloseButton: true
     }).then((result) => {
-        startLoading();
-
         if (result.value) {
+            startLoading();
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "DELETE",
-                url: "/admin/tags/" + id,
+                url: "/admin/articles/" + id,
                 dataType: "json",
                 success: function (response) {
+                    stopLoading();
                     reloadTable();
-
                     toastSuccess(response.message);
                 },
                 error: function (response) {
@@ -83,7 +83,3 @@ const deleteData = (e) => {
         }
     })
 }
-
-
-
-

@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class ArticleService
@@ -67,13 +68,13 @@ class ArticleService
                     $actionBtn = '
                     <div class="text-center" width="10%">
                         <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-secondary">
+                            <a href="'.route('admin.articles.show', $data->uuid).'"  class="btn btn-sm btn-secondary">
                                 <i class="fas fa-eye"></i>
-                            </button>
+                            </a>
 
-                            <button type="button" class="btn btn-sm btn-success">
+                            <a href="'.route('admin.articles.edit', $data->uuid). '"  class="btn btn-sm btn-success">
                                 <i class="fas fa-edit"></i>
-                            </button>
+                            </a>
 
                             <button type="button" class="btn btn-sm btn-danger" onclick="deleteData(this)" data-id="' . $data->uuid . '">
                                 <i class="fas fa-trash-alt"></i>
@@ -104,14 +105,55 @@ class ArticleService
         return Tag::latest()->get(['id', 'name']);
     }
 
+    public function getFirstBy(string $column, string $value, bool $relation = false)
+    {
+        if ($relation == true) {
+            return Article::with('user:id,name', 'category:id,name', 'tags:id,name')->where($column, $value)->firstOrFail();
+        }
+
+        return Article::where($column, $value)->firstOrFail();
+    }
+
     public function create(array $data)
     {
         $data['slug'] = Str::slug($data['title']);
+
+        if ($data['published'] == 1) {
+            $data['published_at'] = date('Y-m-d');
+        }
 
         // insert article_tag
         $article = Article::create($data);
         $article->tags()->sync($data['tag_id']);
 
         return $article;
+    }
+
+    public function update(array $data, string $uuid)
+    {
+        $data['slug'] = Str::slug($data['title']);
+
+        if ($data['published'] == 1) {
+            $data['published_at'] = date('Y-m-d');
+        }
+
+        // insert article_tag
+        $article = Article::where('uuid', $uuid)->firstOrFail();
+        $article->update($data);
+        $article->tags()->sync($data['tag_id']);
+
+        return $article;
+    }
+
+    public function delete(string $uuid)
+    {
+        $getArticle = $this->getFirstBy('uuid', $uuid);
+
+        Storage::disk('public')->delete('images/' . $getArticle->image);
+
+        $getArticle->tags()->detach();
+        $getArticle->delete();
+
+        return $getArticle;
     }
 }
