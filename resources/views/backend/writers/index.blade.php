@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Categories')
+@section('title', 'Writers')
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
@@ -13,24 +13,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <x-card icon="list" title="Categories">
-
-                    <button class="btn btn-primary" onclick="modalCategory()">Create</button>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalImport"><i class="fas fa-file-excel"></i> Import</button>
-
-                    @session('success')
-                        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            {{ session('success') }}
-                        </div>
-                    @endsession
-
-                     @session('error')
-                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            {{ session('error') }}
-                        </div>
-                    @endsession
+                <x-card icon="tag" title="Writers">
 
                     <div class="table-responsive-sm">
                         <table class="table table-striped table-bordered table-striped" id="yajra" width="100%">
@@ -38,7 +21,9 @@
                                 <tr>
                                     <th width="1%">No</th>
                                     <th>Name</th>
-                                    <th>Slug</th>
+                                    <th>Email</th>
+                                    <th>Registered At</th>
+                                    <th>Verified</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -53,8 +38,7 @@
         </div>
     </div>
 
-    @include('backend.categories._modal')
-    @include('backend.categories._modal-download')
+    @include('backend.tags._modal')
 @endsection
 
 @push('js')
@@ -63,9 +47,9 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
     <script src={{ asset('assets/backend/js/helper.js') }}></script>
-    <script src={{ asset('assets/backend/js/category.js') }}></script>
+    <script src={{ asset('assets/backend/js/writer.js') }}></script>
 
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 
-    {!! JsValidator::formRequest('App\Http\Requests\CategoryRequest', '#formCategory') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\TagRequest', '#formTag') !!}
 @endpush

@@ -13,7 +13,7 @@ class TagController extends Controller
 {
     public function __construct(private TagService $tagService)
     {
-
+        $this->middleware('owner');
     }
     /**
      * Display a listing of the resource.

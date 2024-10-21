@@ -17,6 +17,7 @@ class ArticleController extends Controller
         private ArticleService $articleService,
         private ImageService $imageService
     ) {
+        $this->middleware('writer');
     }
     /**
      * Display a listing of the resource.
