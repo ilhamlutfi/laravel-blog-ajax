@@ -18,6 +18,8 @@ Route::prefix('admin')->group(function () {
 
     // articles
     Route::get('articles/serverside', [ArticleController::class, 'serverside'])->name('admin.articles.serverside');
+    Route::get('restore/{uuid}', [ArticleController::class, 'restore'])->name('admin.articles.restore');
+    Route::delete('articles/force-delete/{uuid}', [ArticleController::class, 'forceDelete']);
     Route::resource('articles', ArticleController::class)
     ->names('admin.articles');
 

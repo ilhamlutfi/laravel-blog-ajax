@@ -8,6 +8,12 @@
             <div class="col-md-10">
                 <x-card icon="file-alt" title="Detail Article: {!! $article->title !!}">
 
+                    @session('success')
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endsession
+
                     <div class="table-responsive-sm">
                         <table class="table table-striped table-bordered table-striped" id="yajra" width="100%">
                             <tr>
@@ -29,7 +35,8 @@
                                 <th>Tag</th>
                                 <td>
                                     @foreach ($article->tags as $tag)
-                                        <span class="badge bg-secondary">{{ $tag->name }}</span> <span class="mx-1"></span>
+                                        <span class="badge bg-secondary">{{ $tag->name }}</span> <span
+                                            class="mx-1"></span>
                                     @endforeach
                                 </td>
                             </tr>
@@ -79,8 +86,18 @@
                         </table>
 
                         <div class="float-end">
-                            <a href="{{ route('admin.articles.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
-                            <a href="{{ route('admin.articles.edit', $article->uuid) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                            <a href="{{ route('admin.articles.index') }}" class="btn btn-secondary"><i
+                                    class="fas fa-arrow-left"></i> Back</a>
+                            <a href="{{ route('admin.articles.edit', $article->uuid) }}" class="btn btn-primary"><i
+                                    class="fas fa-edit"></i> Edit</a>
+
+                            @if (auth()->user()->hasRole('owner') && $article->deleted_at != null)
+                                <a href="{{ route('admin.articles.restore', $article->uuid) }}" class="btn btn-warning"><i
+                                        class="fas fa-undo"></i> Restore</a>
+
+                                <button type="button" class="btn btn-danger" onclick="deleteForceData(this)" data-id="{{ $article->uuid }}"><i
+                                        class="fas fa-trash-alt"></i> Force Delete</button>
+                            @endif
                         </div>
                     </div>
 
@@ -89,3 +106,10 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('assets/backend/library/jquery/jquery-3.7.1.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src={{ asset('assets/backend/js/helper.js') }}></script>
+    <script src={{ asset('assets/backend/js/article.js') }}></script>
+@endpush

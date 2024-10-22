@@ -1,11 +1,11 @@
 let submit_method;
 
 $(document).ready(function () {
-    tagTable();
+    articleTable();
 });
 
 // datatable serverside
-function tagTable() {
+function articleTable() {
     $('#yajra').DataTable({
         processing: true,
         serverSide: true,
@@ -51,7 +51,7 @@ const deleteData = (e) => {
 
     Swal.fire({
         title: "Are you sure?",
-        text: "Do you want to delete this tag?",
+        text: "Do you want to delete this article?",
         icon: "question",
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
@@ -75,6 +75,52 @@ const deleteData = (e) => {
                     stopLoading();
                     reloadTable();
                     toastSuccess(response.message);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+    })
+}
+
+const deleteForceData = (e) => {
+    let id = e.getAttribute('data-id');
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to delete permanently this article?",
+        icon: "question",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        allowOutsideClick: false,
+        showCancelButton: true,
+        showCloseButton: true
+    }).then((result) => {
+        if (result.value) {
+            startLoading();
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "DELETE",
+                url: "/admin/articles/force-delete/" + id,
+                dataType: "json",
+                success: function (response) {
+                    stopLoading();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: "Success!",
+                        text: response.message,
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/admin/articles';
+                        }
+                    })
                 },
                 error: function (response) {
                     console.log(response);
