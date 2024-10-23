@@ -6,13 +6,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\WriterController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ArticleController as FrontendArticleController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
+
+Route::resource('article', FrontendArticleController::class)
+->only('show', 'index')
+->names('articles');
 
 Route::prefix('admin')->group(function () {
-    Route::get('dashboard', function() {
+    Route::get('dashboard', function () {
         return view('home');
     });
 
@@ -21,26 +25,26 @@ Route::prefix('admin')->group(function () {
     Route::get('restore/{uuid}', [ArticleController::class, 'restore'])->name('admin.articles.restore');
     Route::delete('articles/force-delete/{uuid}', [ArticleController::class, 'forceDelete']);
     Route::resource('articles', ArticleController::class)
-    ->names('admin.articles');
+        ->names('admin.articles');
 
     // categories
     Route::get('categories/serverside', [CategoryController::class, 'serverside'])->name('admin.categories.serverside');
     Route::post('categories/import', [CategoryController::class, 'import'])->name('admin.categories.import');
     Route::resource('categories', CategoryController::class)
-    ->except('create', 'edit')
-    ->names('admin.categories');
+        ->except('create', 'edit')
+        ->names('admin.categories');
 
     // tags
     Route::get('tags/serverside', [TagController::class, 'serverside'])->name('admin.tags.serverside');
     Route::resource('tags', TagController::class)
-    ->except('create', 'edit')
-    ->names('admin.tags');
+        ->except('create', 'edit')
+        ->names('admin.tags');
 
     // writers
     Route::get('writers/serverside', [WriterController::class, 'serverside'])->name('admin.writers.serverside');
     Route::resource('writers', WriterController::class)
-    ->only('index')
-    ->names('admin.writers');
+        ->only('index')
+        ->names('admin.writers');
 });
 
 Auth::routes();
