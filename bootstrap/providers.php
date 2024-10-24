@@ -2,6 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    Yajra\DataTables\DataTablesServiceProvider::class,
+    App\Providers\SideMenuProvider::class,
     Barryvdh\Debugbar\ServiceProvider::class,
+    Yajra\DataTables\DataTablesServiceProvider::class,
 ];

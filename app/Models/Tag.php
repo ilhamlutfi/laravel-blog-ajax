@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tag extends Model
@@ -26,5 +27,10 @@ class Tag extends Model
     {
         return Category::where('name', 'like', "%{$search}%")
         ->orWhere('slug', 'like', "%{$search}%");
+    }
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
     }
 }

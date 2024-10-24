@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
@@ -28,5 +29,8 @@ class Category extends Model
         ->orWhere('slug', 'like', "%{$search}%");
     }
 
-    
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
+    }
 }

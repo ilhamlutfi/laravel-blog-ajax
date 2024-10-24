@@ -39,13 +39,15 @@
                     <div class="row g-4 align-items-center">
                         <div class="col-md-6">
                             <div class="rounded overflow-hidden">
-                                <img src="{{ asset('storage/images/' . $top_view->image) }}"
-                                    class="img-fluid rounded img-zoomin w-100" alt="{{ $top_view->title }}">
+                                <a href="{{ route('articles.show', $top_view->slug) }}">
+                                    <img src="{{ asset('storage/images/' . $top_view->image) }}"
+                                        class="img-fluid rounded img-zoomin w-100" alt="{{ $top_view->title }}">
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="d-flex flex-column">
-                                <a href="#" class="h3">{{ $top_view->title }}</a>
+                                <a href="{{ route('articles.show', $top_view->slug) }}" class="h3">{{ $top_view->title }}</a>
                                 <p class="mb-0 fs-5"><i class="fa fa-eye"> {{ $top_view->views }} Views</i></p>
                                 <p class="mb-0 fs-5"><i class="fa fa-folder"> {{ $top_view->category->name }}</i></p>
                                 <p class="mb-0 fs-5">
@@ -84,13 +86,15 @@
                                 <div class="row g-4 align-items-center">
                                     <div class="col-5">
                                         <div class="overflow-hidden rounded">
-                                            <img src="{{ asset('storage/images/' . $item->image) }}"
-                                                class="img-zoomin img-fluid rounded w-100" alt="{{ $item->title }}">
+                                            <a href="{{ route('articles.show', $item->slug) }}">
+                                                <img src="{{ asset('storage/images/' . $item->image) }}"
+                                                    class="img-zoomin img-fluid rounded w-100" alt="{{ $item->title }}">
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="col-7">
                                         <div class="features-content d-flex flex-column">
-                                            <a href="#" class="h6">{{ $item->title }}</a>
+                                            <a href="{{ route('articles.show', $item->slug) }}" class="h6">{{ $item->title }}</a>
                                             <small><i class="fa fa-folder"> {{ $item->category->name }}</i> </small>
                                             <small><i class="fa fa-eye"> {{ $item->views }} Views</i></small>
                                         </div>

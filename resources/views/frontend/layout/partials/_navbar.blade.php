@@ -39,7 +39,7 @@
             <div class="container-fluid bg-light">
                 <div class="container px-0">
                     <nav class="navbar navbar-light navbar-expand-xl">
-                        <a href="index.html" class="navbar-brand mt-3">
+                        <a href="{{ route('frontend.home') }}" class="navbar-brand mt-3">
                             <p class="text-primary display-6 mb-2" style="line-height: 0;">MSIB</p>
                             <small class="text-body fw-normal" style="letter-spacing: 12px;">Laravel Blog</small>
                         </a>
@@ -50,7 +50,7 @@
                             <div class="navbar-nav mx-auto border-top">
                                 <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
                                 <a href="detail-page.html" class="nav-item nav-link">Articles</a>
-                                
+
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">

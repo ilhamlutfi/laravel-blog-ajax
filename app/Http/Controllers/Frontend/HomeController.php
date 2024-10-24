@@ -21,7 +21,7 @@ class HomeController extends Controller
         // artikel terpopuler
         $top_view = Article::with('category:id,name', 'tags:id,name')
             ->select('id', 'category_id', 'title', 'slug', 'content', 'published', 'is_confirm', 'views', 'image')
-            ->orderBy('views', 'asc')
+            ->orderBy('views', 'desc')
             ->where('published', true)
             ->where('is_confirm', true)
             ->first();
