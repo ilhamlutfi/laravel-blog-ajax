@@ -40,7 +40,8 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('assets/backend/library/jquery/jquery-3.7.1.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0-beta.2.js"></script>
+    {{-- <script src="{{ asset('assets/backend/library/jquery/jquery-3.7.1.min.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
