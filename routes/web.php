@@ -1,19 +1,30 @@
 <?php
 
-use App\Http\Controllers\Backend\ArticleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TagController;
-use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\WriterController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Backend\WriterController;
+use App\Http\Controllers\Backend\ArticleController;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Frontend\SitemapController;
+use App\Http\Controllers\Frontend\TagController as FrontendTagController;
 use App\Http\Controllers\Frontend\ArticleController as FrontendArticleController;
+use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 
+Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
 Route::resource('article', FrontendArticleController::class)
-->only('show', 'index')
+->only('index', 'show')
 ->names('articles');
+
+Route::resource('category', FrontendCategoryController::class)
+->only('index', 'show')
+->names('category');
+
+Route::get('tag/{slug}', [FrontendTagController::class, 'showByTag'])->name('frontend.tag');
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', function () {

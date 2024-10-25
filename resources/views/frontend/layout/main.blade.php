@@ -5,8 +5,7 @@
         <meta charset="utf-8">
         <title>@yield('title') - MyBlog</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
+        @stack('meta')
 
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +21,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{{ asset('assets/frontend') }}/css/bootstrap.min.css" rel="stylesheet">
-        
+
         @stack('css')
         <!-- Template Stylesheet -->
         <link href="{{ asset('assets/frontend') }}/css/style.css" rel="stylesheet">
@@ -187,7 +186,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('assets/frontend') }}/lib/easing/easing.min.js"></script>
         <script src="{{ asset('assets/frontend') }}/lib/waypoints/waypoints.min.js"></script>
-        
+
         @stack('js')
         <!-- Template Javascript -->
         <script src="{{ asset('assets/frontend') }}/js/main.js"></script>

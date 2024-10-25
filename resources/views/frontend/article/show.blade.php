@@ -2,6 +2,17 @@
 
 @section('title', $article->title)
 
+@push('meta')
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Ilham Lutfi | ilhamlutfi.github.io">
+    <meta name="keyword" content="{{ $article->keywords }}">
+    <meta name="description"
+        content="{{ Str::limit($article->content, 200, '...') }}">
+    <meta property="og:title" content="{{ $article->title }}">
+    <meta property="og:image" content="{{ url(asset('storage/images/'. $article->image)) }}">
+    <meta name="image" content="{{ url(asset('storage/images/'. $article->image)) }}">
+@endpush
+
 @push('css')
 @endpush
 
@@ -13,7 +24,7 @@
     <div class="container-fluid py-5">
         <div class="container py-5">
             <ol class="breadcrumb justify-content-start mb-4">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('articles.index') }}">Articles</a></li>
                 <li class="breadcrumb-item active text-dark">{{ $article->title }}</li>
             </ol>

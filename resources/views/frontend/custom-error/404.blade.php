@@ -7,8 +7,8 @@
     <div class="container-fluid py-5">
         <div class="container py-5 text-center">
             <ol class="breadcrumb justify-content-center mb-5">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('articles.index') }}">Article</a></li>
                 <li class="breadcrumb-item active text-dark">404</li>
             </ol>
             <div class="row justify-content-center">

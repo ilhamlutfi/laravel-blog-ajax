@@ -11,7 +11,7 @@
                 <div class="row g-2">
                     @foreach ($categories as $category)
                         <div class="col-12">
-                            <a href="#"
+                            <a href="{{ route('category.show', $category->slug) }}"
                                 class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
                                 {{ $category->name }} ({{ $category->total_articles }})
                             </a>
@@ -75,7 +75,7 @@
                         <ul class="nav nav-pills d-inline-flex text-center mb-4">
                             @foreach ($tags as $tag)
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
+                                <a class="d-flex py-2 bg-light rounded-pill me-2" href="{{ route('frontend.tag', $tag->slug) }}">
                                     <span class="text-dark link-hover" style="width: 90px;">#{{ $tag->name }}</span>
                                 </a>
                             </li>

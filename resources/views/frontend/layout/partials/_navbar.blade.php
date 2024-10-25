@@ -48,16 +48,17 @@
                         </button>
                         <div class="collapse navbar-collapse bg-light py-3" id="navbarCollapse">
                             <div class="navbar-nav mx-auto border-top">
-                                <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
-                                <a href="detail-page.html" class="nav-item nav-link">Articles</a>
+                                <a href="{{ route('frontend.home') }}" class="nav-item nav-link active">Home</a>
+
+                                <a href="{{ route('articles.index') }}" class="nav-item nav-link">Articles</a>
 
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
                                     <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="#" class="dropdown-item">Sports</a>
-                                        <a href="#" class="dropdown-item">Megazine</a>
-                                        <a href="#" class="dropdown-item">Politics</a>
-                                        <a href="#" class="dropdown-item">Technology</a>
+                                        <a href="{{ route('category.show', 'laravel') }}" class="dropdown-item">Laravel</a>
+                                        <a href="{{ route('category.show', 'express-js') }}" class="dropdown-item">Express Js</a>
+                                        <a href="{{ route('category.show', 'adonis-js') }}" class="dropdown-item">Adonis Js</a>
+                                        <a href="{{ route('category.index') }}" class="dropdown-item">All Category</a>
                                     </div>
                                 </div>
 
