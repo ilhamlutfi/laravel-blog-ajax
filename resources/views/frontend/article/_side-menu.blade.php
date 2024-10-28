@@ -3,9 +3,9 @@
         <div class="col-12">
             <div class="p-3 rounded border">
                 <div class="input-group w-100 mx-auto d-flex mb-4">
-                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                    <span id="search-icon-1" class="btn btn-primary input-group-text p-3"><i
-                            class="fa fa-search text-white"></i></span>
+                    <form action="{{ route('frontend.article.search')}}" method="get" class="w-100">
+                        <input type="search" name="keyword" class="form-control p-3" placeholder="Enter keywords..." aria-describedby="search-icon-1">
+                    </form>
                 </div>
                 <h4 class="mb-4">Categories</h4>
                 <div class="row g-2">

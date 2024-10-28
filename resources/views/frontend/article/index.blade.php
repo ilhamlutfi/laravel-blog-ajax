@@ -31,6 +31,13 @@
                 <div class="col-lg-8">
                     <div class="mb-4">
                         <a href="#" class="h1 display-5">Articles</a>
+
+                        @if ($keyword)
+                            <div class="d-flex align-items-center">
+                                Displaying articles with keyword: <b>{{ $keyword }}</b>
+                            </div>
+                            <a href="{{ route('articles.index') }}" class="badge bg-secondary">Reset</a>
+                        @endif
                     </div>
 
                     <div class="card">

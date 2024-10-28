@@ -10,11 +10,11 @@ class ArticleService
     {
         if ($relation == true) {
             $article = Article::with('category:id,name,slug', 'user:id,name', 'tags:id,name,slug')
-            ->where($column, $value)
-            ->first();
+                ->where($column, $value)
+                ->first();
         } else {
             $article = Article::where($column, $value)
-            ->first();
+                ->first();
         }
 
         return $article;
@@ -23,11 +23,24 @@ class ArticleService
     public function all()
     {
         $article = Article::with('category:id,name,slug', 'user:id,name')
-        ->select(['id', 'title', 'slug', 'category_id', 'user_id', 'published', 'is_confirm', 'views', 'image', 'published_at'])
-        ->orderBy('published_at', 'desc')
-        ->where('published', true)
-        ->where('is_confirm', true)
-        ->SimplePaginate(6);
+            ->select(['id', 'title', 'slug', 'category_id', 'user_id', 'published', 'is_confirm', 'views', 'image', 'published_at'])
+            ->orderBy('published_at', 'desc')
+            ->where('published', true)
+            ->where('is_confirm', true)
+            ->SimplePaginate(6);
+
+        return $article;
+    }
+
+    public function search(string $keyword)
+    {
+        $article = Article::with('category:id,name,slug', 'user:id,name')
+            ->select(['id', 'title', 'slug', 'category_id', 'user_id', 'published', 'is_confirm', 'views', 'image', 'published_at'])
+            ->orderBy('published_at', 'desc')
+            ->where('published', true)
+            ->where('is_confirm', true)
+            ->where('title', 'like', '%' . $keyword . '%')
+            ->SimplePaginate(6);
 
         return $article;
     }
@@ -79,9 +92,9 @@ class ArticleService
     {
         // artikel terpopuler
         $articles = Article::with('category:id,name')
-        ->select('id', 'category_id', 'title', 'slug', 'published', 'is_confirm', 'views', 'image', 'published_at')
-        ->orderBy('views', 'desc')
-        ->where('published', true)
+            ->select('id', 'category_id', 'title', 'slug', 'published', 'is_confirm', 'views', 'image', 'published_at')
+            ->orderBy('views', 'desc')
+            ->where('published', true)
             ->where('is_confirm', true)
             ->limit(4)
             ->get();

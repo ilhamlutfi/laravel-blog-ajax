@@ -16,6 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 
 Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
+Route::get('article/search', [FrontendArticleController::class, 'index'])->name('frontend.article.search');
 Route::resource('article', FrontendArticleController::class)
 ->only('index', 'show')
 ->names('articles');

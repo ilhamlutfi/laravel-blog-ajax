@@ -62,8 +62,7 @@
                                 </li>
                                 @foreach ($article->tags as $item)
                                     <li class="nav-item mb-3">
-                                        <a href="" class="d-flex py-2 bg-light rounded-pill active me-2"
-                                            data-bs-toggle="pill" href="#tab-1">
+                                        <a href="{{ route('frontend.tag', $item->slug) }}" class="d-flex py-2 bg-light rounded-pill active me-2">
                                             <span class="text-dark" style="width: 100px;">{{ $item->name }}</span>
                                         </a>
                                     </li>
